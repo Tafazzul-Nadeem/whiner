@@ -1,0 +1,22 @@
+IITK
+
+IMAP: qasid.iitk.ac.in
+Port: 993
+Security: SSL/TLS
+
+SMTP: mmtp.iitk.ac.in
+Port: 465
+Security: SSL/TLS
+
+
+
+
+CSE
+
+IMAP: imap.cse.iitk.ac.in
+Port: 993
+Security: SSL
+
+SMTP: smtp.cse.iitk.ac.in
+Port: 587
+Security: STARTTLS

@@ -1,2 +1,2 @@
 # whiner
-Agentic AI system for auto setting reminder for events from mail inboxes
+Agentic AI system for auto setting of reminders for events from incoming mails
