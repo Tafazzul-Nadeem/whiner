@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Your credentials and server settings
-IMAP_SERVER = os.getenv("IMAP_SERVER")
-EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT") # without domain
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+IMAP_SERVER = os.getenv("IMAP_SERVER1")
+EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT1") # without domain
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD1")
 
 # Connect to the server
 mail = imaplib.IMAP4_SSL(IMAP_SERVER)
@@ -30,7 +30,7 @@ email_ids = messages[0].split()
 
 print(f"Total emails: {len(email_ids)}")
 # Fetch the most recent email
-latest_email_id = email_ids[-21]
+latest_email_id = email_ids[-2]
 
 # status, data = mail.fetch(latest_email_id, "(RFC822)") # this marks the mail read
 status, data = mail.fetch(latest_email_id, "(BODY.PEEK[])") # this does not mark the mail read
