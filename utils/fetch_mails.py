@@ -1,8 +1,6 @@
-import json
-
 from utils.connect import connect_webmail
+from utils.timestamp import get_last_timestamp, update_last_timestamp
 from utils.email_utils import (
-    get_last_timestamp,
     fetch_all_emails,
     new_email_exists,
     store_email,
@@ -30,8 +28,10 @@ def get_new_emails(webmail_details):
             break
     if new_mails:
         latest_email_date = new_mails[-1].date
-        with open("last_timestamp.json", "w") as f:
-            json.dump({"last_timestamp": latest_email_date}, f)
+        update_last_timestamp(latest_email_date)
+    else:
+        pass
+    
     mail.logout()
     return new_mails
 
