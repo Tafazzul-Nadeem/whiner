@@ -25,6 +25,6 @@ def add_event(summary, description, start_time, end_time, calendar_id='primary')
     print(f"✅ Event created: {event.get('htmlLink')}")
 
 if __name__ == "__main__":
-    start = datetime.datetime(2025, 7, 20, 19, 0)
-    end = datetime.datetime(2025, 7, 20, 20, 0)
+    start = datetime.datetime(2025, 7, 20, 23, 0)
+    end = datetime.datetime(2025, 7, 20, 23, 30)
     add_event("Meeting", "Discuss project", start, end)

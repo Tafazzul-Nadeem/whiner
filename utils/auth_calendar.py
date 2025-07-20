@@ -1,8 +1,6 @@
 from google_auth_oauthlib.flow import InstalledAppFlow
-
-import datetime
 import os
-import pickle
+from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.events']
@@ -13,7 +11,7 @@ def get_credentials():
     # Load token if it exists
     if os.path.exists('token.json'):
         with open('token.json', 'rb') as token:
-            creds = pickle.load(token)
+            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
     # If token is invalid/expired or doesn't exist, do OAuth flow
     if not creds or not creds.valid:
@@ -25,8 +23,8 @@ def get_credentials():
             creds = flow.run_local_server(port=0)
 
         # Save the new token
-        with open('token.json', 'wb') as token:
-            pickle.dump(creds, token)
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
 
     return creds
 
