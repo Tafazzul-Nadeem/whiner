@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+#  These files are specific to my project and should not be ignored.
+client_secret.json
+token.json
+whiner-credentials.json

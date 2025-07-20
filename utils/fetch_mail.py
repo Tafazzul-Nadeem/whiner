@@ -30,7 +30,7 @@ email_ids = messages[0].split()
 
 print(f"Total emails: {len(email_ids)}")
 # Fetch the most recent email
-latest_email_id = email_ids[-1]
+latest_email_id = email_ids[-21]
 
 # status, data = mail.fetch(latest_email_id, "(RFC822)") # this marks the mail read
 status, data = mail.fetch(latest_email_id, "(BODY.PEEK[])") # this does not mark the mail read
@@ -44,7 +44,9 @@ if isinstance(subject, bytes):
     subject = subject.decode(encoding or "utf-8")
 
 # From
-from_ = msg.get("From")
+from_ = msg.get("CC")
+date_time = msg.get("Date")
+print("Date:", date_time)
 
 # Print email info
 print("From:", from_)
