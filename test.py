@@ -1,69 +1,36 @@
-import imaplib
-import email
-from email.header import decode_header
-import os
-from dotenv import load_dotenv
+import re
 
-# Load environment variables from .env file
-load_dotenv()
+# def extract_number_like_entities(text):
+#     pattern = r"[+]?[\d\(\)\-\_\/\s]{5,}"  # Match sequences of digits and allowed symbols
+#     matches = re.findall(pattern, text)
+#     # Clean and filter matches: must contain at least 5 digits, and no letters
+#     result = []
+#     for m in matches:
+#         print(m)
+#         cleaned = m.strip()
+#         if not re.search(r"[a-zA-Z]", cleaned):
+#             digit_count = len(re.findall(r"\d", cleaned))
+#             if digit_count >= 5:
+#                 result.append(cleaned)
+#     return result
 
-# Your credentials and server settings
-IMAP_SERVER = os.getenv("IMAP_SERVER1")
-EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT1") # without domain
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD1")
+# # Example
+# text = "Contact us at +91 (512) 234/a754-2554 or (123) 456-7890. Avoid ABC123."
+# print(extract_number_like_entities(text))
 
-# Connect to the server
-mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-mail.login(EMAIL_ACCOUNT, EMAIL_PASSWORD)
+def extract_number_like_entities(text):
+    pattern = r"(?:[+(\d])[\d\(\)\-\_\/\s]{4,}"  # At least 5 characters, starting with digit/(/+
+    matches = re.findall(pattern, text)
+    result = []
+    for m in matches:
+        print(m)
+        cleaned = m.strip()
+        if not re.search(r"[a-zA-Z]", cleaned):
+            digit_count = len(re.findall(r"\d", cleaned))
+            if digit_count >= 5:
+                result.append(cleaned)
+    return result
 
-# status, mailboxes = mail.list()
-# for box in mailboxes:
-#     print(box.decode())
-
-# Select the mailbox you want to use
-mail.select("INBOX")  # or "INBOX" or any other mailbox
-
-# Search for all emails
-status, messages = mail.search(None, "ALL")
-email_ids = messages[0].split()
-# print(email_ids)
-
-print(f"Total emails: {len(email_ids)}")
-# Fetch the most recent email
-latest_email_id = email_ids[-2]
-
-# status, data = mail.fetch(latest_email_id, "(RFC822)") # this marks the mail read
-status, data = mail.fetch(latest_email_id, "(BODY.PEEK[])") # this does not mark the mail read
-
-# Parse the email
-msg = email.message_from_bytes(data[0][1])
-
-# Decode subject
-subject, encoding = decode_header(msg["Subject"])[0]
-if isinstance(subject, bytes):
-    subject = subject.decode(encoding or "utf-8")
-
-# From
-from_ = msg.get("CC")
-date_time = msg.get("Date")
-print("Date:", date_time)
-
-# Print email info
-print("From:", from_)
-print("Subject:", subject)
-
-# Extract body
-if msg.is_multipart():
-    for part in msg.walk():
-        content_type = part.get_content_type()
-        content_disposition = str(part.get("Content-Disposition"))
-        if content_type == "text/plain" and "attachment" not in content_disposition:
-            body = part.get_payload(decode=True).decode()
-            print("Body:", body)
-            break
-else:
-    body = msg.get_payload(decode=True).decode()
-    print("Body:", body)
-
-# Logout
-mail.logout()
+# Example
+text = "Call +91 (512) 234/754-2554 or (123) 456-7890, not at  ABC123 or  hello."
+print(extract_number_like_entities(text))
