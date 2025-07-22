@@ -102,20 +102,20 @@ def clean_component(text, entity_map, code_counters):
         email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
         matches = re.findall(email_pattern, text)
         for m in matches:
-            code_word = f"Secret{code_counters['SECRET']}"
-            code_counters["SECRET"] += 1
+            code_word = f"EmailId{code_counters['EMAIL']}"
+            code_counters["EMAIL"] += 1
             text = text.replace(m, code_word)
-            entity_map["secret"][code_word] = m
+            entity_map["email"][code_word] = m
         return text, entity_map, code_counters
     
     def clean_weblinks(text, entity_map, code_counters):
         url_pattern = r"https?://[^\s]+"
         matches = re.findall(url_pattern, text)
         for m in matches:
-            code_word = f"Secret{code_counters['SECRET']}"
-            code_counters["SECRET"] += 1
+            code_word = f"Weblink{code_counters['LINK']}"
+            code_counters["LINK"] += 1
             text = text.replace(m, code_word)
-            entity_map["secret"][code_word] = m
+            entity_map["link"][code_word] = m
         return text, entity_map, code_counters
     
     # Main cleaning process

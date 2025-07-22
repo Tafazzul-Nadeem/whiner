@@ -1,14 +1,20 @@
-from event_creator.clean_email import clean_mail
+import google.generativeai as genai
+from langgraph.graph import StateGraph, END
+from typing import TypedDict
+import os
+# from PIL import Image
+from dotenv import load_dotenv
 
-def get_events(new_mails):
-    events = []
-    for mail in new_mails:
-        subject, body, secrets = clean_mail(mail)
-        # Here you would implement the logic to extract events from the email
-        # For now, we will just simulate event extraction
-        events.append({
-            "subject": subject,
-            "body": body,
-            "secrets": secrets
-        })
-    return events
+from agents.langgraph_agents import call_agents
+# Load environment variables from .env file
+load_dotenv()
+
+def get_events(new_mail):
+    # Start the agentic call flow
+    result = call_agents(new_mail)
+    return result
+
+# ---- Run it ----
+if __name__ == "__main__":
+    event = get_events("Sample email content to extract events from.")
+    

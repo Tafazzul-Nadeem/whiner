@@ -2,8 +2,8 @@ from event_creator.cleaning_tool import clean_component
 
 def clean_mail(email):
     # Data Structure to store entities and their codes
-    entity_map = {"person": {}, "company": {}, "secret":{}}
-    code_counters = {"PERSON": 1, "ORG": 1, "SECRET": 1}
+    entity_map = {"person": {}, "company": {}, "secret":{}, "email":{}, "link":{}}
+    code_counters = {"PERSON": 1, "ORG": 1, "SECRET": 1, "EMAIL": 1, "LINK": 1}
 
     # Clean the subject
     subject = email.subject
@@ -13,7 +13,7 @@ def clean_mail(email):
     new_subject, entity_map, code_counters = clean_component(new_subject, 
                                                              entity_map, 
                                                              code_counters)
-    subject = new_subject
+    email.subject = new_subject
 
     # Clean the body
     body = email.body
@@ -23,9 +23,9 @@ def clean_mail(email):
     new_body, entity_map, code_counters = clean_component(new_body, 
                                                              entity_map, 
                                                              code_counters)
-    body = new_body
+    email.body = new_body
 
-    return subject, body, entity_map
+    return email, entity_map
 
 if __name__ == "__main__":
     # Example email object
@@ -41,7 +41,7 @@ Utah,
 USA.
 """
     email = Email(text, "Let's discuss the project details John.")
-    cleaned_subject, cleaned_body, secrets = clean_mail(email)
-    print(f"Cleaned Subject: {cleaned_subject}")
-    print(f"Cleaned Body: {cleaned_body}")
+    cleaned_email, secrets = clean_mail(email)
+    print(f"Cleaned Subject: {cleaned_email.subject}")
+    print(f"Cleaned Body: {cleaned_email.body}")
     print(f"Secrets: {secrets}")
