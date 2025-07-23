@@ -148,8 +148,7 @@ def call_agents(new_mail, secrets):
 
     def agent6(state: AgentState) -> AgentState:
         """Clean the date and time formats."""
-        custom_prompt = prompts["agent6"].format(event_title=state['event_title'],
-                                                  event_date=state['event_date'],
+        custom_prompt = prompts["agent6"].format(event_date=state['event_date'],
                                                   event_time=state['event_time'])
         model = genai.GenerativeModel("gemma-3-4b-it")
         response = model.generate_content(custom_prompt)
