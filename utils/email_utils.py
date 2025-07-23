@@ -19,9 +19,13 @@ def fetch_all_emails(mail, folder="INBOX"):
     return messages[0].split()
 
 def new_email_exists(latest_timestamp, last_timestamp):
-    t1 = parsedate_to_datetime(latest_timestamp)
-    t2 = parsedate_to_datetime(last_timestamp)
-    return t1 > t2 # True if new email exists
+    try:
+        # print(latest_timestamp, last_timestamp)
+        t1 = parsedate_to_datetime(latest_timestamp)
+        t2 = parsedate_to_datetime(last_timestamp)
+        return t1 > t2 # True if new email exists
+    except:
+        return False
 
 def store_email(msg):
     if msg.is_multipart():

@@ -9,9 +9,9 @@ from agents.langgraph_agents import call_agents
 # Load environment variables from .env file
 load_dotenv()
 
-def get_events(new_mail):
+def get_events(new_mail, secrets):
     # Start the agentic call flow
-    result = call_agents(new_mail)
+    result = call_agents(new_mail, secrets)
     return result
 
 # ---- Run it ----
