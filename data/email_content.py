@@ -10,3 +10,11 @@ class EmailContent:
                 f"date={self.date!r},\n"
                 f"body={self.body!r},\n"
                 f"attachment={self.attachment!r}")
+    
+    def to_dict(self):
+        return {
+            "subject": self.subject,
+            "date": self.date,
+            "body": self.body,
+            "attachment": self.attachment
+        }

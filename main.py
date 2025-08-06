@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import pprint
+import json
 
 # User-defined imports
 from data.webmail_details import WebmailDetails
@@ -31,12 +32,17 @@ def main():
         cleaned_emails.append(cleaned_mail)
         secrets.append(mail_secrets)
     print(f"Extracted {len(cleaned_emails)} events from the new emails.")
-    # for event in cleaned_emails:
-    #     print(f"Subject: {event.subject}")
-    #     print(f"From: {event.date}")
-    #     print(f"Body: {event.body}")
-    #     print(f"Secrets: {secrets}")
-    #     print("-" * 120)
+
+    email_in_dict = [s.to_dict() for s in cleaned_emails]
+    # Create dictionary
+    data = {
+        "mail": email_in_dict,
+        "secrets": secrets
+    }
+
+    # Save to JSON
+    with open("data/cleaned_mails.json", "w") as f:
+        json.dump(data, f)
 
     # Get events from the new emails
     new_events = []
