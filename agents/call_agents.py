@@ -112,8 +112,7 @@ def call_agents(new_mail, secrets):
                 "event_online_link": response.text
             }
     def agent4(state: AgentState) -> AgentState:
-        """Replace all secrets and make a toolcall to find 
-        more about the main entity."""
+        """Replace all secrets in the state with their original values."""
         restored_state = {}
         # Flatten all entity_map values into one replacement dict
         replacement_map = {}
@@ -121,7 +120,7 @@ def call_agents(new_mail, secrets):
             replacement_map.update(category)
 
         for key, value in state.items():
-            if isinstance(value, str):
+            if isinstance(value, str):  
                 for placeholder, original in replacement_map.items():
                     value = value.replace(placeholder, original)
             restored_state[key] = value
