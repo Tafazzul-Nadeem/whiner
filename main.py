@@ -4,7 +4,7 @@ import pprint
 
 # User-defined imports
 from data.webmail_details import WebmailDetails
-from utils.fetch_mails import get_new_emails
+from utils.get_new_emails import get_new_emails
 from event_creator.clean_email import clean_mail
 from event_creator.get_events import get_events
 from utils.add_reminder import add_event

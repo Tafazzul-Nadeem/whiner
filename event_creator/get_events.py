@@ -5,14 +5,14 @@ import os
 # from PIL import Image
 from dotenv import load_dotenv
 
-from agents.langgraph_agents import call_agents
+from agents.call_agents import call_agents
 # Load environment variables from .env file
 load_dotenv()
 
 def get_events(new_mail, secrets):
     # Start the agentic call flow
-    result = call_agents(new_mail, secrets)
-    return result
+    event_dict = call_agents(new_mail, secrets)
+    return event_dict
 
 # ---- Run it ----
 if __name__ == "__main__":
