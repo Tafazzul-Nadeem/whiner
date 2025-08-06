@@ -1,4 +1,4 @@
-from event_creator.cleaning_tool import clean_component
+from event_creator.clean_component import clean_component
 
 def clean_mail(email):
     # Data Structure to store entities and their codes
