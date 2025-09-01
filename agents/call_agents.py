@@ -225,7 +225,11 @@ def call_agents(new_mail, secrets):
     final_state = graph.invoke(state)
     print("\nGemini Agent:", final_state["email_summary"])
 
-    return final_state
+    if final_state["important_mail"] == "NO":
+        # Perform web search or any other action
+        return None
+    else:
+        return final_state
 
 # ---- Run it ----
 if __name__ == "__main__":
