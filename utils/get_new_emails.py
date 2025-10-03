@@ -11,6 +11,7 @@ from utils.email_utils import (
 def get_new_emails(webmail_details):
     mail = connect_webmail(webmail_details)
     all_emails = fetch_all_emails(mail, folder="INBOX")
+    print(f"Total emails in INBOX: {len(all_emails)}")
     last_timestamp = get_last_timestamp()
 
     new_mails = []
@@ -20,6 +21,9 @@ def get_new_emails(webmail_details):
         if not msg:
             continue
         email_date = msg.get("Date")
+        if email_date is None:
+            continue
+        print(f"Checking email with date: {email_date}")
         if last_timestamp is None or new_email_exists(email_date, last_timestamp):
             # CREATE EMAIL CONTENT OBJECT
             email_content = store_email(msg)
